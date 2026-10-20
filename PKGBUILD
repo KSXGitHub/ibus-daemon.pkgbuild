@@ -16,7 +16,7 @@ depends=(
 source=(
 	'ibus@.service'
 	'ibus-config@.service'
-	'ibus-daemon-run'
+	'ibus-session-env'
 	'enable-ibus-daemon'
 	'LICENSE.md'
 	'README.md'
@@ -34,7 +34,7 @@ package() {
 	cd "$srcdir"
 	install -Dm644 ibus@.service "$pkgdir/usr/lib/systemd/user/ibus@.service"
 	install -Dm644 ibus-config@.service "$pkgdir/usr/lib/systemd/user/ibus-config@.service"
-	install -Dm755 ibus-daemon-run "$pkgdir/usr/bin/ibus-daemon-run"
+	install -Dm755 ibus-session-env "$pkgdir/usr/bin/ibus-session-env"
 	install -Dm755 enable-ibus-daemon "$pkgdir/usr/bin/enable-ibus-daemon"
 	install -Dm644 LICENSE.md "$pkgdir/usr/share/licenses/$pkgname/LICENSE.md"
 	install -Dm644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
