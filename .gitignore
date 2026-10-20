@@ -5,4 +5,4 @@
 !*.service
 !*.md
 !enable-ibus-daemon
-!ibus-session-env
+!ibus-daemon-run-with-env
