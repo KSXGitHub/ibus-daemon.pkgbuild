@@ -4,13 +4,20 @@ Documentation=man:ibus-daemon(1)
 Conflicts=fcitx.service
 Before=ibus-config@.service
 Requires=ibus-config@.service
+# Governs Restart= below. SystemD's defaults (5 starts per 10s) are too tight
+# to ride out a session that comes up slowly.
+StartLimitIntervalSec=60
+StartLimitBurst=10
 
 [Service]
-ExecStart=/usr/bin/ibus-daemon-run --replace --xim
-ExecReload=/usr/bin/ibus restart
-ExecStop=/usr/bin/ibus exit
+ExecStart=/usr/bin/ibus-session-env /usr/bin/ibus-daemon --replace --xim
+ExecReload=/usr/bin/ibus-session-env /usr/bin/ibus restart
+ExecStop=/usr/bin/ibus-session-env /usr/bin/ibus exit
 Environment=DISPLAY="%I" GTK_IM_MODULE=ibus QT_IM_MODULE=ibus XMODIFIERS="@im=ibus"
-# The Wayland socket may not exist yet when the user manager starts at boot.
+# Recover a daemon that died while the session was still up. This does *not*
+# cover a Wayland socket that is merely missing at start: the wrapper then
+# exits successfully having exported DISPLAY only, so nothing fails and
+# nothing is retried.
 Restart=on-failure
 RestartSec=2
 
