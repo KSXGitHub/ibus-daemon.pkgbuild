@@ -1,4 +1,6 @@
 #!/bin/sh
+set -o errexit -o nounset
+
 # Run a command with the session's display environment fully populated.
 #
 # ibus records its address per display server in ~/.config/ibus/bus/:
